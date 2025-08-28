@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CID • Panel</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="toast" class="toast"></div>
+
+  <!-- ======= LOGOWANIE ======= -->
+  <main id="view-auth" class="view auth">
+    <div class="login-card glass">
+      <img src="cid-logo.png" alt="CID" class="login-logo" />
+      <h1>PANEL DOSTĘPOWY CID</h1>
+      <p class="muted">Zaloguj się, aby kontynuować</p>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="agent">Agent</button>
+        <button class="tab" data-tab="admin">Admin</button>
+      </div>
+
+      <!-- Agent -->
+      <div id="panel-agent" class="tab-panel active">
+        <label class="field">
+          <span>Identyfikator Agenta (UID)</span>
+          <input id="agentUID" type="text" placeholder="np. 75202" />
+        </label>
+        <label class="field">
+          <span>Hasło</span>
+          <div class="password">
+            <input id="agentPass" type="password" placeholder="••••••••" />
+            <button id="toggleAgentPass" class="eye" aria-label="pokaż/ukryj hasło">👁</button>
+          </div>
+        </label>
+        <button id="btnAgentLogin" class="btn primary wide">Zaloguj się</button>
+        <div id="agentErr" class="err"></div>
+
+        <div class="login-split"><span>lub</span></div>
+        <button class="btn discord wide" disabled title="Włączę, jeśli dodasz Discord OAuth">Zaloguj się przez Discord</button>
+
+        <div class="login-bottom">
+          <a class="link" href="#" onclick="return false;">Nie pamiętasz hasła?</a>
+          <div class="ssl"><span class="dot-green"></span> Twoje połączenie jest szyfrowane (SSL)</div>
+        </div>
+      </div>
+
+      <!-- Admin -->
+      <div id="panel-admin" class="tab-panel">
+        <label class="field">
+          <span>E-mail admina</span>
+          <input id="adminEmail" type="email" placeholder="admin@cid.division" />
+        </label>
+        <label class="field">
+          <span>Hasło</span>
+          <div class="password">
+            <input id="adminPass" type="password" placeholder="••••••••" />
+            <button id="toggleAdminPass" class="eye" aria-label="pokaż/ukryj hasło">👁</button>
+          </div>
+        </label>
+        <button id="btnAdminLogin" class="btn primary wide">Zaloguj się</button>
+        <div id="adminErr" class="err"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ======= DASHBOARD (po zalogowaniu) ======= -->
+  <main id="view-app" class="view hidden">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="s-head">
+        <img src="cid-logo.png" class="s-logo" alt="CID" />
+        <div class="s-meta">
+          <div class="code">Kod: <span class="badge badge-yellow">Żółty</span></div>
+          <div class="online"><span class="dot-green"></span> Online: <span id="onlineCount">21</span></div>
+        </div>
+      </div>
+
+      <nav class="s-nav">
+        <button class="s-link active" data-page="home">🏠 Strona Główna</button>
+        <button class="s-link" data-page="agents">👥 Pracownicy</button>
+        <button class="s-link" data-page="trainings">🎓 Szkolenia</button>
+        <button class="s-link" data-page="gov">🏛️ GOV</button>
+        <button class="s-link" data-page="bands">🏷️ Opaski</button>
+        <button class="s-link" data-page="depts">🧭 Wydziały</button>
+      </nav>
+
+      <div class="s-user">
+        <div class="avatar"><span class="dot-green"></span></div>
+        <div>
+          <div id="uName">Agent</div>
+          <div class="muted small" id="uRole">AGENT</div>
+        </div>
+        <button id="btnLogout" class="btn ghost">Wyloguj</button>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <section class="content">
+      <!-- Home -->
+      <div id="page-home" class="page active">
+        <div class="welcome glass">
+          <h2 id="welcomeTitle">Witaj w bazie CID!</h2>
+          <p class="muted" id="welcomeSub1">Twój wydział: —</p>
+          <p class="muted">Status: <b id="welcomeStatus">—</b></p>
+          <p class="muted" id="welcomeSub2">Twój stopień: —</p>
+          <div class="actions">
+            <button class="btn outline" id="goStatus">Zarządzaj statusami</button>
+            <button class="btn outline" id="goDepts">Wydziały</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agents -->
+      <div id="page-agents" class="page">
+        <div class="grid">
+          <!-- Admin: add agent -->
+          <div id="adminOnly" class="card glass hidden">
+            <h3>Dodaj agenta</h3>
+            <div class="grid2">
+              <label class="field"><span>Imię</span><input id="aImie" type="text"></label>
+              <label class="field"><span>Nazwisko</span><input id="aNazwisko" type="text"></label>
+              <label class="field"><span>Ranga (1–5 / 03–01)</span><input id="aRanga" type="text" placeholder="np. 3 lub 02"></label>
+              <label class="field"><span>Stopień</span><input id="aStopien" type="text" placeholder="np. Special Agent"></label>
+              <label class="field"><span>UID (unikalny)</span><input id="aUID" type="text" placeholder="np. 75202"></label>
+              <label class="field"><span>Hasło (dla logowania UID)</span><input id="aHaslo" type="password"></label>
+              <label class="switch"><input id="aZarzad" type="checkbox"><span>Członek zarządu</span></label>
+            </div>
+            <div class="hint">Agent loguje się przez <b>UID + hasło</b> (hash SHA-256 w bazie).</div>
+            <button id="btnAddAgent" class="btn success">Dodaj agenta</button>
+          </div>
+
+          <!-- Lista -->
+          <div class="card glass">
+            <div class="list-head">
+              <h3>Pracownicy</h3>
+              <input id="search" class="search" type="text" placeholder="Szukaj po imieniu/nazwisku/UID…">
+            </div>
+            <div class="agent-card">
+              <div class="agent-head"><span>PRACOWNIK</span><span>RANGA</span><span>STOPIEŃ</span></div>
+              <div id="agentsList" class="stack"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trainings (placeholder pod rozszerzenia) -->
+      <div id="page-trainings" class="page">
+        <div class="card glass"><h3>Szkolenia</h3><div class="hint">Szkolenia dodasz/edytujesz w profilu agenta.</div></div>
+      </div>
+
+      <div id="page-gov" class="page"><div class="card glass"><h3>GOV</h3><div class="muted">Tu możesz dodać materiały GOV.</div></div></div>
+      <div id="page-bands" class="page"><div class="card glass"><h3>Opaski</h3><div class="muted">Sekcja pod opaski operacyjne.</div></div></div>
+      <div id="page-depts" class="page"><div class="card glass"><h3>Wydziały</h3><div class="muted">Wydziały i przypisania – do ustalenia.</div></div></div>
+    </section>
+
+    <!-- Drawer: profil agenta -->
+    <div id="backdrop" class="backdrop"></div>
+    <aside id="drawer" class="drawer">
+      <div class="drawer-head">
+        <div>
+          <div id="pName" class="title"></div>
+          <div id="pUID" class="subtitle"></div>
+        </div>
+        <div class="drawer-actions">
+          <button id="btnDeleteAgent" class="btn danger outline">Usuń</button>
+          <button id="btnCloseDrawer" class="btn ghost">Zamknij</button>
+        </div>
+      </div>
+      <div class="drawer-body">
+        <div class="profile-grid">
+          <div class="kv"><span>Imię</span><b id="pImie">—</b></div>
+          <div class="kv"><span>Nazwisko</span><b id="pNazwisko">—</b></div>
+          <div class="kv">
+            <span>Ranga</span>
+            <select id="pRanga" class="select">
+              <option value="01">01</option><option value="02">02</option><option value="03">03</option>
+              <option value="5">5</option><option value="4">4</option><option value="3">3</option>
+              <option value="2">2</option><option value="1">1</option>
+            </select>
+          </div>
+          <div class="kv"><span>Stopień</span><b id="pStopien">—</b></div>
+          <div class="kv"><span>Zarząd</span>
+            <label class="switch inline"><input id="pZarzad" type="checkbox"><span>Tak/Nie</span></label>
+          </div>
+        </div>
+        <div class="row"><button id="btnSaveRank" class="btn primary">Zapisz zmiany</button></div>
+
+        <h4>Szkolenia</h4>
+        <ul id="pTrainings" class="trainings"></ul>
+        <div class="train-form">
+          <input id="tName" type="text" placeholder="Nazwa szkolenia">
+          <select id="tStatus"><option value="true">Zdane</option><option value="false">Nie zdane</option></select>
+          <button id="btnAddTraining" class="btn success">Dodaj</button>
+        </div>
+        <div class="tiny-hint">Usunięcie użytkownika z <b>Auth</b> wymaga Cloud Function lub konsoli Firebase (front nie ma uprawnień).</div>
+      </div>
+    </aside>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
