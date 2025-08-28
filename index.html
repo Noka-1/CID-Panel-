@@ -43,12 +43,6 @@
         <div class="login-split"><span>lub</span></div>
         <button class="btn discord wide" disabled title="Włączę, jeśli dodasz Discord OAuth">Zaloguj się przez Discord</button>
 
-        <div class="login-bottom">
-          <a class="link" href="#" onclick="return false;">Nie pamiętasz hasła?</a>
-          <div class="ssl"><span class="dot-green"></span> Twoje połączenie jest szyfrowane (SSL)</div>
-        </div>
-      </div>
-
       <!-- Admin -->
       <div id="panel-admin" class="tab-panel">
         <label class="field">
@@ -70,23 +64,11 @@
 
   <!-- ======= DASHBOARD (po zalogowaniu) ======= -->
   <main id="view-app" class="view hidden">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="s-head">
-        <img src="cid-logo.png" class="s-logo" alt="CID" />
-        <div class="s-meta">
-          <div class="code">Kod: <span class="badge badge-yellow">Żółty</span></div>
-          <div class="online"><span class="dot-green"></span> Online: <span id="onlineCount">21</span></div>
-        </div>
-      </div>
 
       <nav class="s-nav">
         <button class="s-link active" data-page="home">🏠 Strona Główna</button>
         <button class="s-link" data-page="agents">👥 Pracownicy</button>
         <button class="s-link" data-page="trainings">🎓 Szkolenia</button>
-        <button class="s-link" data-page="gov">🏛️ GOV</button>
-        <button class="s-link" data-page="bands">🏷️ Opaski</button>
-        <button class="s-link" data-page="depts">🧭 Wydziały</button>
       </nav>
 
       <div class="s-user">
@@ -105,13 +87,7 @@
       <div id="page-home" class="page active">
         <div class="welcome glass">
           <h2 id="welcomeTitle">Witaj w bazie CID!</h2>
-          <p class="muted" id="welcomeSub1">Twój wydział: —</p>
-          <p class="muted">Status: <b id="welcomeStatus">—</b></p>
           <p class="muted" id="welcomeSub2">Twój stopień: —</p>
-          <div class="actions">
-            <button class="btn outline" id="goStatus">Zarządzaj statusami</button>
-            <button class="btn outline" id="goDepts">Wydziały</button>
-          </div>
         </div>
       </div>
 
@@ -205,3 +181,4 @@
   <script type="module" src="app.js"></script>
 </body>
 </html>
+
